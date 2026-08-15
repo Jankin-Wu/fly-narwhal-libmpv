@@ -34,6 +34,13 @@ The matching SHA256 checksums are stored in [`mpv-sha256.txt`](./mpv-sha256.txt)
 
 After pushing the new checksum, FlyNarwhal builds will automatically pick up the new release.
 
+## Current status
+
+- ✅ Repository created and populated with x86_64 + aarch64 archives.
+- ✅ Tag `v2026.05.31` pushed.
+- ⏳ **Release not yet published**: the archives are currently available via `raw.githubusercontent.com`; the Flutter build falls back to this URL automatically.
+- ⏳ **Action required**: manually create a GitHub Release from tag `v2026.05.31` and upload the two archive files as release assets, then builds will switch to using `releases/latest/download`.
+
 ## Current archives
 
 | Architecture | Source archive | Commit | SHA256 |
