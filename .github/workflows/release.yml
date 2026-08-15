@@ -1,0 +1,44 @@
+name: Publish libmpv Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify release assets exist
+        run: |
+          for asset in mpv-dev-x86_64.7z mpv-dev-aarch64.7z; do
+            if [ ! -f "$asset" ]; then
+              echo "::error::Release asset missing: $asset"
+              exit 1
+            fi
+            echo "Found asset: $asset ($(du -h "$asset" | cut -f1))"
+          done
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            mpv-dev-x86_64.7z
+            mpv-dev-aarch64.7z
+          generate_release_notes: false
+          body: |
+            Self-hosted libmpv archives for FlyNarwhal Windows builds.
+
+            Archives are downloaded from this repository's latest release by:
+            - `mpv-dev-x86_64.7z`
+            - `mpv-dev-aarch64.7z`
+
+            See [README.md](https://github.com/${{ github.repository }}/blob/master/README.md) for usage and checksum details.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
