@@ -15,31 +15,23 @@ The Flutter/CMake build downloads the **latest release** from this repository:
 
 The matching SHA256 checksums are stored in [`mpv-sha256.txt`](./mpv-sha256.txt) in the repository root. The build script downloads this file first and verifies the archive against it.
 
-## How to publish a new libmpv version
-
-1. Obtain the verified libmpv archive(s) for the desired date/architecture.
-2. Rename the assets to the fixed names:
-   - `mpv-dev-x86_64.7z`
-   - `mpv-dev-aarch64.7z`
-3. Create a new GitHub Release in this repository.
-4. Upload the renamed archive(s) to the release.
-5. Update `mpv-sha256.txt` in this repository with the SHA256 of each uploaded archive, in the format:
-
-   ```text
-   x86_64  <sha256>
-   aarch64 <sha256>
-   ```
-
-6. Commit and push the updated `mpv-sha256.txt`.
-
-After pushing the new checksum, FlyNarwhal builds will automatically pick up the new release.
-
 ## Current status
 
-- ✅ Repository created and populated with x86_64 + aarch64 archives.
-- ✅ Tag `v2026.05.31` pushed.
-- ⏳ **Release not yet published**: the archives are currently available via `raw.githubusercontent.com`; the Flutter build falls back to this URL automatically.
-- ⏳ **Action required**: manually create a GitHub Release from tag `v2026.05.31` and upload the two archive files as release assets, then builds will switch to using `releases/latest/download`.
+- Repository created and populated with x86_64 + aarch64 archives.
+- Tag `v2026.05.31` pushed and release auto-published via GitHub Actions.
+- Release assets are available at `https://github.com/Jankin-Wu/fly-narwhal-libmpv/releases/latest/download/...`
+
+## How releases are published
+
+The repository includes a GitHub Actions workflow (`.github/workflows/release.yml`) that automatically creates a release and uploads the archives whenever a tag matching `v*` is pushed.
+
+To publish a new version:
+
+1. Replace `mpv-dev-x86_64.7z` and/or `mpv-dev-aarch64.7z` with the new archives.
+2. Update `mpv-sha256.txt` with the new SHA256 values.
+3. Commit and push the changes.
+4. Push a new tag matching `v*` (for example: `git tag v2026.06.01 && git push origin v2026.06.01`).
+5. GitHub Actions will create the release and upload the assets automatically.
 
 ## Current archives
 
